@@ -1,0 +1,20 @@
+---
+title: "PhenoCrops"
+author: "Grupo 5"
+format: html
+editor: visual
+---
+
+```{r}
+integrantes <- c("Campos Troyes, Edgar Orlando"
+                 , "Vasquez Guevara, Jheferson Yoel"
+                 , "Tapia Chavarri. Britney Emeli"
+                 , "Fernandez Rojas, Jonatan Dali"
+                 , "Gomez Cruz, Kevin Orlando"
+                 , "Yantec Ocampo, Daemar Enrique")
+participacion <- c("100%", "25%", "100%", "25%", "25%", "25%")
+
+tabla <- data.frame(Integrantes = integrantes, Participacion = participacion)
+
+tabla
+```
