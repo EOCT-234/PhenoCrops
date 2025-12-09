@@ -12,7 +12,7 @@ integrantes <- c("Campos Troyes, Edgar Orlando"
                  , "Fernandez Rojas, Jonatan Dali"
                  , "Gomez Cruz, Kevin Orlando"
                  , "Yantec Ocampo, Daemar Enrique")
-participacion <- c("100%", "50%", "100%", "25%", "25%", "25%")
+participacion <- c("100%", "90%", "100%", "%", "%", "%")
 
 tabla <- data.frame(Integrantes = integrantes, Participacion = participacion)
 
