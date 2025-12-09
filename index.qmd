@@ -128,6 +128,10 @@ Clase reconocida "peciolo", pero lo ha reconocido en la región equivocada, lo h
 
 Este error se le atribuye a que no se usó la suficiente cantidad de imágenes o también de que al descargar el formato los archivos se hubieran dañado.
 
+## Predicciones obtenidas del entrenamiento
+
+![](images/clipboard-2424459219.png)
+
 # Anexos
 
 -   Imágenes usadas: https://drive.google.com/drive/folders/1pv3_1awIPfNOG9ZR2jCWH8xkxYaGVREK
