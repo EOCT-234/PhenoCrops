@@ -1,0 +1,5 @@
+train: C:/Users/ASUS/Documents/PROGRAMACION/PAD_U3_G5/PhenoCrops/dataset/train
+val: C:/Users/ASUS/Documents/PROGRAMACION/PAD_U3_G5/PhenoCrops/dataset/val
+
+names:
+  0: hoja

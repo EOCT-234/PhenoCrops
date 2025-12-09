@@ -12,9 +12,124 @@ integrantes <- c("Campos Troyes, Edgar Orlando"
                  , "Fernandez Rojas, Jonatan Dali"
                  , "Gomez Cruz, Kevin Orlando"
                  , "Yantec Ocampo, Daemar Enrique")
-participacion <- c("100%", "25%", "100%", "25%", "25%", "25%")
+participacion <- c("100%", "50%", "100%", "25%", "25%", "25%")
 
 tabla <- data.frame(Integrantes = integrantes, Participacion = participacion)
 
 tabla
 ```
+
+# Librerias
+
+```{r}
+library(googledrive)
+library(ggplot2)
+library(tidyr)
+library(googlesheets4)
+```
+
+# Fenotipado en ImageJ.exe
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&gid=0#gid=0"
+
+gs <- url %>%
+  as_sheets_id()
+
+ImageJ <- gs %>%
+  range_read(sheet = "ImageJ")
+
+View(ImageJ)
+```
+
+#Fenotipado en Ela.exe
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&gid=0#gid=0"
+
+gs <- url %>%
+  as_sheets_id()
+
+ela <- gs %>%
+  range_read(sheet = "ela")
+
+View(ela)
+```
+
+#Comparación de áreas obtenidad en las dos aplicaciones
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&gid=0#gid=0"
+
+gs <- url %>%
+  as_sheets_id()
+
+todo <- gs %>%
+  range_read(sheet = "todo")
+
+View(todo)
+```
+
+# Barplot de las área obtenidas.
+
+```{r}
+datos <- data.frame(
+  Hojas = c("Luc_01","Luc_02","Luc_03","Luc_04","Luc_05","Luc_06","Luc_07","Luc_08",
+            "Luc_09","Luc_10","Luc_11","Luc_12","Luc_13","Luc_14","Luc_15","Luc_16",
+            "Luc_17","Luc_18","Luc_19","Luc_20","Luc_21","Luc_22","Luc_23","Luc_24","Luc_25"),
+  Area_ImageJ = c(44.48,29.42,41.09,45.81,34.51,36.65,37.52,55.53,
+                  42.04,38.61,48.05,46.15,35.93,49,49.81,55.89,
+                  37.29,51.98,52.74,41.52,57.27,49.46,43.48,46.9,34.79),
+  Area_ela = c(64.46,41.99,56.1,37.24,50.46,87.34,62.46,91.84,
+               42.28,84.86,51.95,52.61,39.24,44.01,52.64,49.43,
+               71.26,34.79,62.53,52.91,43.65,52.42,49.48,29.21,44.62)
+)
+
+todo_long <- pivot_longer(
+  todo,
+  cols = c("Area ImageJ", "Area ela"),
+  names_to = "Metodo",
+  values_to = "Area"
+)
+
+ggplot(todo_long, aes(x = Hojas, y = Area, fill = Metodo)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  theme_minimal() +
+  labs(title = "Comparación de áreas por hoja",
+       x = "Hojas",
+       y = "Área") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, size = 8))
+
+```
+
+# Entrenamineto de IA
+
+El proyecto PhenoCrops comenzó con la recopilación de imágenes de lúcuma y su organización en un conjunto de datos estructurado en carpetas de entrenamiento, validación y prueba. Posteriormente se generaron las anotaciones utilizando labelstudio en su versión de segmentación, lo que permitió obtener máscaras poligonales almacenadas en archivos de texto bajo el formato estándar de YOLO (formato exportado). Con estas anotaciones se configuró un archivo YAML que definió las clases, rutas y estructura del dataset. El entrenamiento del modelo se llevó a cabo en la terminal de Windows (CMD), utilizando como base el modelo YOLOv8n-seg por su balance entre velocidad y eficiencia. Tras varias épocas de entrenamiento se obtuvo el modelo final best.pt, el cual se usó para generar predicciones y obtener nuevas máscaras segmentadas, que luego fueron descargadas al equipo local.
+
+![](images/clipboard-2758917329.jpeg){width="682"}
+
+![](images/clipboard-3833046870.jpeg)
+
+# Resultado de entrenamiento
+
+C:\Users\ASUS\Documents\PROGRAMACION\PAD\_U3_G5\PhenoCrops\Entrenamineto de IA\dataset\runs\segment\train
+
+![](images/clipboard-3283872325.jpeg)
+
+C:\Users\ASUS\Documents\PROGRAMACION\PAD\_U3_G5\PhenoCrops\images
+
+![](images/clipboard-2758917329.jpeg)![](images/clipboard-3833046870.jpeg)
+
+![](images/clipboard-1690166848.png)
+
+![](images/clipboard-2256107356.jpeg){width="262"}
+
+Clase reconocida "peciolo", pero lo ha reconocido en la región equivocada, lo ha hecho en la región que es de la clase "Hoja".
+
+Este error se le atribuye a que no se usó la suficiente cantidad de imágenes o también de que al descargar el formato los archivos se hubieran dañado.
+
+# Anexos
+
+-   Imágenes usadas: https://drive.google.com/drive/folders/1pv3_1awIPfNOG9ZR2jCWH8xkxYaGVREK
+
+-   Imágenes de ela.exe https://drive.google.com/drive/folders/1SRlYCb1ZVEdITpXi_CzIaZVbdB3QEvHP?usp=sharing
