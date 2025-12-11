@@ -26,6 +26,8 @@ library(googledrive)
 library(ggplot2)
 library(tidyr)
 library(googlesheets4)
+library(dplyr)
+library(lme4)
 ```
 
 ## Fenotipado en ImageJ.exe
@@ -51,7 +53,7 @@ gs <- url %>%
   as_sheets_id()
 
 ela <- gs %>%
-  googlesheets4::range_read(sheet = "ela")
+  range_read(sheet = "ela")
 
 View(ela)
 ```
@@ -70,53 +72,87 @@ todo <- gs %>%
 View(todo)
 ```
 
-### Barplot de las área obtenidas.
+### Regresión lineal de las áreas obtenidas
 
 ```{r}
-datos <- data.frame(
-  Hojas = c("Luc_01","Luc_02","Luc_03","Luc_04","Luc_05","Luc_06","Luc_07","Luc_08",
-            "Luc_09","Luc_10","Luc_11","Luc_12","Luc_13","Luc_14","Luc_15","Luc_16",
-            "Luc_17","Luc_18","Luc_19","Luc_20","Luc_21","Luc_22","Luc_23","Luc_24","Luc_25"),
-  Area_ImageJ = c(44.48,29.42,41.09,45.81,34.51,36.65,37.52,55.53,
-                  42.04,38.61,48.05,46.15,35.93,49,49.81,55.89,
-                  37.29,51.98,52.74,41.52,57.27,49.46,43.48,46.9,34.79),
-  Area_ela = c(64.46,41.99,56.1,37.24,50.46,87.34,62.46,91.84,
-               42.28,84.86,51.95,52.61,39.24,44.01,52.64,49.43,
-               71.26,34.79,62.53,52.91,43.65,52.42,49.48,29.21,44.62)
+
+modelo <- lm(`Area ImageJ` ~ `Area ela`, data = todo)
+summary(modelo)
+
+muestras <- todo$nombre
+
+plot(
+  x = 1:nrow(todo),
+  y = todo$`Area ela`,
+  pch = 19,          
+  col = "blue",
+  xlab = "Hojas",
+  ylab = "Área (cm²)",
+  main = "Comparación de áreas: ela vs ImageJ",
+  xaxt = "n"       
 )
 
-todo_long <- pivot_longer(
-  todo,
-  cols = c("Area ImageJ", "Area ela"),
-  names_to = "Metodo",
-  values_to = "Area"
+points(
+  x = 1:nrow(todo),
+  y = todo$`Area ImageJ`,
+  pch = 19,
+  col = "black"
 )
 
-ggplot(todo_long, aes(x = Hojas, y = Area, fill = Metodo)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  theme_minimal() +
-  labs(title = "Comparación de áreas por hoja",
-       x = "Hojas",
-       y = "Área") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, size = 8))
+axis(
+  side = 1,
+  at = 1:nrow(todo),
+  labels = muestras,
+  las = 2        
+)
+
+legend(
+  "topleft",
+  legend = c("Área ela", "Área ImageJ"),
+  col = c("blue", "black"),
+  pch = 19
+)
+
+abline(modelo, col = "red", lwd = 2)
+
+coef(modelo)
+
+summary(modelo)$r.squared
+
 
 ```
 
+Los resultados muestran que las mediciones de ELA son más variables y, en varios casos, más altas que las obtenidas con ImageJ, que se mantiene más estable. La regresión lineal indica una relación prácticamente inexistente entre ambos métodos, reflejada en una pendiente cercana a cero. El bajo R² confirma que las mediciones de ELA no predicen adecuadamente las de ImageJ. En conjunto, ambos métodos no muestran concordancia fuerte y producen patrones de medición distintos.
+
 # Entrenamineto de IA
 
-##Desarrolloo del proceso Las imágenes fueron exportadas de labelstudio, de la práctica anterior. ###Preparación de datos Primero se cargaron las imágenes y archivos de anotación generados en formato YOLO. Luego, el scrip los clasificó en "data/images" y "data/labels".
+## Desarrollo del proceso
 
-###Aumentación masiva del dataset (20x) Esto se hizo para mejorar el rendimiento del modelo, se generó 20 nuevas versionas por cada imagen original. Dichas transformaciones incluyen rotación aleatoria hasta 40°, ajuste del brillo y contraste, escalado proporcional. Y los resultados los almacena en "argumented/images" y "argumented/labels".
+Las imágenes fueron exportadas de labelstudio, de la práctica anterior. ###Preparación de datos Primero se cargaron las imágenes y archivos de anotación generados en formato YOLO. Luego, el scrip los clasificó en "data/images" y "data/labels".
 
-###Conversión de anotaciones YOLO a COCO Como para el entrenamiento se empleó Mask R-CNN, la mejor opción fue hacer con Detectron2 y para ello se requierían los archivos en formato COCO Instance Segmentation. El scrip procesó cada archivo YOLO aumentado y al final se almacenó en "dataset_coco.json", que contiene las entregas generadas para el entrenamiento y además es compatible con Detectron2.
+### Aumentación masiva del dataset (20x)
 
-###Correción de rutas y etiquetas Como Detectron2 necesita de rutas específicas, se extrajo el nombre original del archivo y se reemplazó cualquier ruta por "data/images/"nombre".jpg", y esto reeescribe toda la sección de imágenes en el JSON.
+Esto se hizo para mejorar el rendimiento del modelo, se generó 20 nuevas versionas por cada imagen original. Dichas transformaciones incluyen rotación aleatoria hasta 40°, ajuste del brillo y contraste, escalado proporcional. Y los resultados los almacena en "argumented/images" y "argumented/labels".
 
-###Entrenamiento del modelo Se usó Mask R-CNN con backbone ResNet-50 FPN, un modelo de segmentación robusto y estándar. Aquí se configuró las clases (Hoja y Escala), Iteraciones de entrenamiento (3000), Bath size (2 imágenes por iteración, adaptado para GPU de Colab), Learning rat (0.00025), Checkpoints (cada 500 iteraciones), Dataset ("leaf_train"). Al final dió un archivo llamado "model_final.pth" que se usó para la interencia y la aplicaicón iinteractiva.
+###Conversión de anotaciones YOLO a COCO
 
-###Inferencia sobre imágenes nuevas Se carga el modelo entrenado "model_final.pth", se selecciona una imagen nueva, Detectron2 realzia la segmentación de la hoja, segmentación del objeto de referencia ("Escala") y genera un dibujo visual de máscaras.
+Como para el entrenamiento se empleó Mask R-CNN, la mejor opción fue hacer con Detectron2 y para ello se requierían los archivos en formato COCO Instance Segmentation. El scrip procesó cada archivo YOLO aumentado y al final se almacenó en "dataset_coco.json", que contiene las entregas generadas para el entrenamiento y además es compatible con Detectron2.
 
-###Desarrollo de la aplicación interactiva (Gradio) Aquí se construye una interfaz completa en Gradio diseñada para permitir mediciones reales en fotografías de hojas usando una escala física. La funcionalidad de la aplicación: - Detección automática: se carga una imagen y la app detecta la hoja, la escala y muestra índices y áreas. - Medición manual mediante clics: esto se incluyó para el caso de imágenes nuevas, que tengan una escala diferente a las uasadas en el entrenamiento (Se usó una regla). - Visualización final: Se genera un reporte con todas las medidas calculadas, hoja segmentada y sus límites.
+### Correción de rutas y etiquetas
+
+Como Detectron2 necesita de rutas específicas, se extrajo el nombre original del archivo y se reemplazó cualquier ruta por "data/images/"nombre".jpg", y esto reeescribe toda la sección de imágenes en el JSON.
+
+### Entrenamiento del modelo
+
+Se usó Mask R-CNN con backbone ResNet-50 FPN, un modelo de segmentación robusto y estándar. Aquí se configuró las clases (Hoja y Escala), Iteraciones de entrenamiento (3000), Bath size (2 imágenes por iteración, adaptado para GPU de Colab), Learning rat (0.00025), Checkpoints (cada 500 iteraciones), Dataset ("leaf_train"). Al final dió un archivo llamado "model_final.pth" que se usó para la interencia y la aplicaicón iinteractiva.
+
+### Inferencia sobre imágenes nuevas
+
+Se carga el modelo entrenado "model_final.pth", se selecciona una imagen nueva, Detectron2 realzia la segmentación de la hoja, segmentación del objeto de referencia ("Escala") y genera un dibujo visual de máscaras.
+
+### Desarrollo de la aplicación interactiva (Gradio)
+
+Aquí se construye una interfaz completa en Gradio diseñada para permitir mediciones reales en fotografías de hojas usando una escala física. La funcionalidad de la aplicación: - Detección automática: se carga una imagen y la app detecta la hoja, la escala y muestra índices y áreas. - Medición manual mediante clics: esto se incluyó para el caso de imágenes nuevas, que tengan una escala diferente a las uasadas en el entrenamiento (Se usó una regla). - Visualización final: Se genera un reporte con todas las medidas calculadas, hoja segmentada y sus límites.
 
 El resultado final es el área en pixleles y cm², largo y ancho en pixeles y cm, perímetro en píxeles y cm, centímetro por píxeles calculados, información del objeto de referencia (escala detectada).
 
@@ -137,4 +173,4 @@ El resultado final es el área en pixleles y cm², largo y ancho en pixeles y cm
 
     python app.py
 
--   Enlace de la interfaz: <http://localhost:7860/>
+-   Enlace de la interfaz: <http://localhost:7860/> y <http://127.0.0.1:7860>
