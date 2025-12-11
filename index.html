@@ -143,18 +143,45 @@ Adjuntando el paquete: 'googlesheets4'</code></pre>
 
     request_generate, request_make</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'dplyr'</code></pre>
 </div>
-</section>
-<section id="fenotipado-en-imagej.exe" class="level1">
-<h1>Fenotipado en ImageJ.exe</h1>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Cargando paquete requerido: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'Matrix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+</div>
+</div>
+<section id="fenotipado-en-imagej.exe" class="level2">
+<h2 class="anchored" data-anchor-id="fenotipado-en-imagej.exe">Fenotipado en ImageJ.exe</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&amp;gid=0#gid=0"</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_sheets_id</span>()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ImageJ <span class="ot">&lt;-</span> gs <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range_read</span>(<span class="at">sheet =</span> <span class="st">"ImageJ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&amp;gid=0#gid=0"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_sheets_id</span>()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>ImageJ <span class="ot">&lt;-</span> gs <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range_read</span>(<span class="at">sheet =</span> <span class="st">"ImageJ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Suitable tokens found in the cache, associated with these emails:</code></pre>
 </div>
@@ -185,77 +212,116 @@ Adjuntando el paquete: 'googlesheets4'</code></pre>
   '7574265122@untrm.edu.pe'.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Auto-refreshing stale OAuth token.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>✔ Reading from "medicion_manual_G5".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Range ''ImageJ''.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ImageJ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ImageJ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>#Fenotipado en Ela.exe</p>
+</section>
+<section id="fenotipado-en-ela.exe" class="level2">
+<h2 class="anchored" data-anchor-id="fenotipado-en-ela.exe">Fenotipado en Ela.exe</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&amp;gid=0#gid=0"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_sheets_id</span>()</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ela <span class="ot">&lt;-</span> gs <span class="sc">%&gt;%</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range_read</span>(<span class="at">sheet =</span> <span class="st">"ela"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&amp;gid=0#gid=0"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_sheets_id</span>()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>ela <span class="ot">&lt;-</span> gs <span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range_read</span>(<span class="at">sheet =</span> <span class="st">"ela"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Reading from "medicion_manual_G5".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Range ''ela''.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ela)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ela)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>#Comparación de áreas obtenidad en las dos aplicaciones</p>
+<section id="comparación-de-áreas-obtenidad-en-las-dos-aplicaciones" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-de-áreas-obtenidad-en-las-dos-aplicaciones">Comparación de áreas obtenidad en las dos aplicaciones</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&amp;gid=0#gid=0"</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_sheets_id</span>()</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>todo <span class="ot">&lt;-</span> gs <span class="sc">%&gt;%</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range_read</span>(<span class="at">sheet =</span> <span class="st">"todo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&amp;gid=0#gid=0"</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_sheets_id</span>()</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>todo <span class="ot">&lt;-</span> gs <span class="sc">%&gt;%</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range_read</span>(<span class="at">sheet =</span> <span class="st">"todo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Reading from "medicion_manual_G5".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Range ''todo''.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(todo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(todo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="barplot-de-las-área-obtenidas." class="level1">
-<h1>Barplot de las área obtenidas.</h1>
+<section id="regresión-lineal-de-las-áreas-obtenidas" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-lineal-de-las-áreas-obtenidas">Regresión lineal de las áreas obtenidas</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Hojas =</span> <span class="fu">c</span>(<span class="st">"Luc_01"</span>,<span class="st">"Luc_02"</span>,<span class="st">"Luc_03"</span>,<span class="st">"Luc_04"</span>,<span class="st">"Luc_05"</span>,<span class="st">"Luc_06"</span>,<span class="st">"Luc_07"</span>,<span class="st">"Luc_08"</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Luc_09"</span>,<span class="st">"Luc_10"</span>,<span class="st">"Luc_11"</span>,<span class="st">"Luc_12"</span>,<span class="st">"Luc_13"</span>,<span class="st">"Luc_14"</span>,<span class="st">"Luc_15"</span>,<span class="st">"Luc_16"</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Luc_17"</span>,<span class="st">"Luc_18"</span>,<span class="st">"Luc_19"</span>,<span class="st">"Luc_20"</span>,<span class="st">"Luc_21"</span>,<span class="st">"Luc_22"</span>,<span class="st">"Luc_23"</span>,<span class="st">"Luc_24"</span>,<span class="st">"Luc_25"</span>),</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Area_ImageJ =</span> <span class="fu">c</span>(<span class="fl">44.48</span>,<span class="fl">29.42</span>,<span class="fl">41.09</span>,<span class="fl">45.81</span>,<span class="fl">34.51</span>,<span class="fl">36.65</span>,<span class="fl">37.52</span>,<span class="fl">55.53</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fl">42.04</span>,<span class="fl">38.61</span>,<span class="fl">48.05</span>,<span class="fl">46.15</span>,<span class="fl">35.93</span>,<span class="dv">49</span>,<span class="fl">49.81</span>,<span class="fl">55.89</span>,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                  <span class="fl">37.29</span>,<span class="fl">51.98</span>,<span class="fl">52.74</span>,<span class="fl">41.52</span>,<span class="fl">57.27</span>,<span class="fl">49.46</span>,<span class="fl">43.48</span>,<span class="fl">46.9</span>,<span class="fl">34.79</span>),</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Area_ela =</span> <span class="fu">c</span>(<span class="fl">64.46</span>,<span class="fl">41.99</span>,<span class="fl">56.1</span>,<span class="fl">37.24</span>,<span class="fl">50.46</span>,<span class="fl">87.34</span>,<span class="fl">62.46</span>,<span class="fl">91.84</span>,</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>               <span class="fl">42.28</span>,<span class="fl">84.86</span>,<span class="fl">51.95</span>,<span class="fl">52.61</span>,<span class="fl">39.24</span>,<span class="fl">44.01</span>,<span class="fl">52.64</span>,<span class="fl">49.43</span>,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>               <span class="fl">71.26</span>,<span class="fl">34.79</span>,<span class="fl">62.53</span>,<span class="fl">52.91</span>,<span class="fl">43.65</span>,<span class="fl">52.42</span>,<span class="fl">49.48</span>,<span class="fl">29.21</span>,<span class="fl">44.62</span>)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>todo_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  todo,</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Area ImageJ"</span>, <span class="st">"Area ela"</span>),</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"Metodo"</span>,</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"Area"</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(todo_long, <span class="fu">aes</span>(<span class="at">x =</span> Hojas, <span class="at">y =</span> Area, <span class="at">fill =</span> Metodo)) <span class="sc">+</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de áreas por hoja"</span>,</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Hojas"</span>,</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Área"</span>) <span class="sc">+</span></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="st">`</span><span class="at">Area ImageJ</span><span class="st">`</span> <span class="sc">~</span> <span class="st">`</span><span class="at">Area ela</span><span class="st">`</span>, <span class="at">data =</span> todo)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = `Area ImageJ` ~ `Area ela`, data = todo)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.1179  -6.5043   0.5059   5.1838  12.7737 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 45.59140    5.47804   8.323 2.16e-08 ***
+`Area ela`  -0.02509    0.09742  -0.258    0.799    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.656 on 23 degrees of freedom
+Multiple R-squared:  0.002876,  Adjusted R-squared:  -0.04048 
+F-statistic: 0.06633 on 1 and 23 DF,  p-value: 0.799</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> todo<span class="sc">$</span>nombre</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Unknown or uninitialised column: `nombre`.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(todo),</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> todo<span class="sc">$</span><span class="st">`</span><span class="at">Area ela</span><span class="st">`</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">19</span>,          </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Hojas"</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Área (cm²)"</span>,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Comparación de áreas: ela vs ImageJ"</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">xaxt =</span> <span class="st">"n"</span>       </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(todo),</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> todo<span class="sc">$</span><span class="st">`</span><span class="at">Area ImageJ</span><span class="st">`</span>,</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="st">"black"</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">side =</span> <span class="dv">1</span>,</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(todo),</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> muestras,</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">las =</span> <span class="dv">2</span>        </span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,</span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Área ela"</span>, <span class="st">"Área ImageJ"</span>),</span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>),</span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">19</span></span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(modelo, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -263,34 +329,62 @@ Adjuntando el paquete: 'googlesheets4'</code></pre>
 </figure>
 </div>
 </div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  `Area ela` 
+45.59140356 -0.02508934 </code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)<span class="sc">$</span>r.squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.002875577</code></pre>
+</div>
+</div>
+<p>Los resultados muestran que las mediciones de ELA son más variables y, en varios casos, más altas que las obtenidas con ImageJ, que se mantiene más estable. La regresión lineal indica una relación prácticamente inexistente entre ambos métodos, reflejada en una pendiente cercana a cero. El bajo R² confirma que las mediciones de ELA no predicen adecuadamente las de ImageJ. En conjunto, ambos métodos no muestran concordancia fuerte y producen patrones de medición distintos.</p>
+</section>
+</section>
 </section>
 <section id="entrenamineto-de-ia" class="level1">
 <h1>Entrenamineto de IA</h1>
-<p>El proyecto PhenoCrops comenzó con la recopilación de imágenes de lúcuma y su organización en un conjunto de datos estructurado en carpetas de entrenamiento, validación y prueba. Posteriormente se generaron las anotaciones utilizando labelstudio en su versión de segmentación, lo que permitió obtener máscaras poligonales almacenadas en archivos de texto bajo el formato estándar de YOLO (formato exportado). Con estas anotaciones se configuró un archivo YAML que definió las clases, rutas y estructura del dataset. El entrenamiento del modelo se llevó a cabo en la terminal de Windows (CMD), utilizando como base el modelo YOLOv8n-seg por su balance entre velocidad y eficiencia. Tras varias épocas de entrenamiento se obtuvo el modelo final best.pt, el cual se usó para generar predicciones y obtener nuevas máscaras segmentadas, que luego fueron descargadas al equipo local.</p>
-<p><img src="images/clipboard-2758917329.jpeg" class="img-fluid" width="682"></p>
-<p><img src="images/clipboard-3833046870.jpeg" class="img-fluid"></p>
+<section id="desarrollo-del-proceso" class="level2">
+<h2 class="anchored" data-anchor-id="desarrollo-del-proceso">Desarrollo del proceso</h2>
+<p>Las imágenes fueron exportadas de labelstudio, de la práctica anterior. ###Preparación de datos Primero se cargaron las imágenes y archivos de anotación generados en formato YOLO. Luego, el scrip los clasificó en “data/images” y “data/labels”.</p>
+<section id="aumentación-masiva-del-dataset-20x" class="level3">
+<h3 class="anchored" data-anchor-id="aumentación-masiva-del-dataset-20x">Aumentación masiva del dataset (20x)</h3>
+<p>Esto se hizo para mejorar el rendimiento del modelo, se generó 20 nuevas versionas por cada imagen original. Dichas transformaciones incluyen rotación aleatoria hasta 40°, ajuste del brillo y contraste, escalado proporcional. Y los resultados los almacena en “argumented/images” y “argumented/labels”.</p>
+<p>###Conversión de anotaciones YOLO a COCO</p>
+<p>Como para el entrenamiento se empleó Mask R-CNN, la mejor opción fue hacer con Detectron2 y para ello se requierían los archivos en formato COCO Instance Segmentation. El scrip procesó cada archivo YOLO aumentado y al final se almacenó en “dataset_coco.json”, que contiene las entregas generadas para el entrenamiento y además es compatible con Detectron2.</p>
 </section>
-<section id="resultado-de-entrenamiento" class="level1">
-<h1>Resultado de entrenamiento</h1>
-<p>C:_U3_G5de IA</p>
-<p><img src="images/clipboard-3283872325.jpeg" class="img-fluid"></p>
-<p>C:_U3_G5</p>
-<p><img src="images/clipboard-2758917329.jpeg" class="img-fluid"><img src="images/clipboard-3833046870.jpeg" class="img-fluid"></p>
-<p><img src="images/clipboard-1690166848.png" class="img-fluid"></p>
-<p><img src="images/clipboard-2256107356.jpeg" class="img-fluid" width="262"></p>
-<p>Clase reconocida “peciolo”, pero lo ha reconocido en la región equivocada, lo ha hecho en la región que es de la clase “Hoja”.</p>
-<p>Este error se le atribuye a que no se usó la suficiente cantidad de imágenes o también de que al descargar el formato los archivos se hubieran dañado.</p>
-<section id="predicciones-obtenidas-del-entrenamiento" class="level2">
-<h2 class="anchored" data-anchor-id="predicciones-obtenidas-del-entrenamiento">Predicciones obtenidas del entrenamiento</h2>
-<p><img src="images/clipboard-2424459219.png" class="img-fluid"></p>
+<section id="correción-de-rutas-y-etiquetas" class="level3">
+<h3 class="anchored" data-anchor-id="correción-de-rutas-y-etiquetas">Correción de rutas y etiquetas</h3>
+<p>Como Detectron2 necesita de rutas específicas, se extrajo el nombre original del archivo y se reemplazó cualquier ruta por “data/images/”nombre”.jpg”, y esto reeescribe toda la sección de imágenes en el JSON.</p>
+</section>
+<section id="entrenamiento-del-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="entrenamiento-del-modelo">Entrenamiento del modelo</h3>
+<p>Se usó Mask R-CNN con backbone ResNet-50 FPN, un modelo de segmentación robusto y estándar. Aquí se configuró las clases (Hoja y Escala), Iteraciones de entrenamiento (3000), Bath size (2 imágenes por iteración, adaptado para GPU de Colab), Learning rat (0.00025), Checkpoints (cada 500 iteraciones), Dataset (“leaf_train”). Al final dió un archivo llamado “model_final.pth” que se usó para la interencia y la aplicaicón iinteractiva.</p>
+</section>
+<section id="inferencia-sobre-imágenes-nuevas" class="level3">
+<h3 class="anchored" data-anchor-id="inferencia-sobre-imágenes-nuevas">Inferencia sobre imágenes nuevas</h3>
+<p>Se carga el modelo entrenado “model_final.pth”, se selecciona una imagen nueva, Detectron2 realzia la segmentación de la hoja, segmentación del objeto de referencia (“Escala”) y genera un dibujo visual de máscaras.</p>
+</section>
+<section id="desarrollo-de-la-aplicación-interactiva-gradio" class="level3">
+<h3 class="anchored" data-anchor-id="desarrollo-de-la-aplicación-interactiva-gradio">Desarrollo de la aplicación interactiva (Gradio)</h3>
+<p>Aquí se construye una interfaz completa en Gradio diseñada para permitir mediciones reales en fotografías de hojas usando una escala física. La funcionalidad de la aplicación: - Detección automática: se carga una imagen y la app detecta la hoja, la escala y muestra índices y áreas. - Medición manual mediante clics: esto se incluyó para el caso de imágenes nuevas, que tengan una escala diferente a las uasadas en el entrenamiento (Se usó una regla). - Visualización final: Se genera un reporte con todas las medidas calculadas, hoja segmentada y sus límites.</p>
+<p>El resultado final es el área en pixleles y cm², largo y ancho en pixeles y cm, perímetro en píxeles y cm, centímetro por píxeles calculados, información del objeto de referencia (escala detectada).</p>
+</section>
 </section>
 </section>
 <section id="anexos" class="level1">
 <h1>Anexos</h1>
 <ul>
 <li><p>Imágenes usadas: https://drive.google.com/drive/folders/1pv3_1awIPfNOG9ZR2jCWH8xkxYaGVREK</p></li>
-<li><p>Imágenes de ela.exe https://drive.google.com/drive/folders/1SRlYCb1ZVEdITpXi_CzIaZVbdB3QEvHP?usp=sharing</p></li>
+<li><p>Imágenes de ela.exe: https://drive.google.com/drive/folders/1SRlYCb1ZVEdITpXi_CzIaZVbdB3QEvHP?usp=sharing</p></li>
+<li><p>Enlace de Colab con el código: https://colab.research.google.com/drive/15mq6eNmU5vNbp9s4cm0jY-aoPjVtxKOf?usp=sharing</p></li>
+<li><p>Se adjunta el la carpeta comprimida de la interfaz creada.</p></li>
+<li><p>Para que la interfaz tenga exito es necesario ejecutar desde Windows PowerShell como administrador el siguiente código:<br>
+cd C:_Analyzer</p>
+<p>venv</p>
+<p>python app.py</p></li>
+<li><p>Enlace de la interfaz: <a href="http://localhost:7860/" class="uri">http://localhost:7860/</a> y <a href="http://127.0.0.1:7860" class="uri">http://127.0.0.1:7860</a></p></li>
 </ul>
 </section>
 

@@ -134,7 +134,7 @@ Las imágenes fueron exportadas de labelstudio, de la práctica anterior. ###Pre
 
 Esto se hizo para mejorar el rendimiento del modelo, se generó 20 nuevas versionas por cada imagen original. Dichas transformaciones incluyen rotación aleatoria hasta 40°, ajuste del brillo y contraste, escalado proporcional. Y los resultados los almacena en "argumented/images" y "argumented/labels".
 
-###Conversión de anotaciones YOLO a COCO
+Conversión de anotaciones YOLO a COCO
 
 Como para el entrenamiento se empleó Mask R-CNN, la mejor opción fue hacer con Detectron2 y para ello se requierían los archivos en formato COCO Instance Segmentation. El scrip procesó cada archivo YOLO aumentado y al final se almacenó en "dataset_coco.json", que contiene las entregas generadas para el entrenamiento y además es compatible con Detectron2.
 
@@ -142,19 +142,37 @@ Como para el entrenamiento se empleó Mask R-CNN, la mejor opción fue hacer con
 
 Como Detectron2 necesita de rutas específicas, se extrajo el nombre original del archivo y se reemplazó cualquier ruta por "data/images/"nombre".jpg", y esto reeescribe toda la sección de imágenes en el JSON.
 
+![](images/clipboard-990591694.png)
+
+Antes entrenar el modelo.
+
 ### Entrenamiento del modelo
 
-Se usó Mask R-CNN con backbone ResNet-50 FPN, un modelo de segmentación robusto y estándar. Aquí se configuró las clases (Hoja y Escala), Iteraciones de entrenamiento (3000), Bath size (2 imágenes por iteración, adaptado para GPU de Colab), Learning rat (0.00025), Checkpoints (cada 500 iteraciones), Dataset ("leaf_train"). Al final dió un archivo llamado "model_final.pth" que se usó para la interencia y la aplicaicón iinteractiva.
+![](images/clipboard-1324892658.png)
+
+Se usó Mask R-CNN con backbone ResNet-50 FPN, un modelo de segmentación robusto y estándar. Aquí se configuró las clases (Hoja y Escala), Iteraciones de entrenamiento (3000), Bath size (2 imágenes por iteración, adaptado para GPU de Colab), Learning rat (0.00025), Checkpoints (cada 500 iteraciones), Dataset ("leaf_train"). Al final dió un archivo llamado "model_final.pth" que se usó para la interencia y la aplicaicón interactiva.
 
 ### Inferencia sobre imágenes nuevas
 
 Se carga el modelo entrenado "model_final.pth", se selecciona una imagen nueva, Detectron2 realzia la segmentación de la hoja, segmentación del objeto de referencia ("Escala") y genera un dibujo visual de máscaras.
+
+![](images/clipboard-3902812702.png)
+
+Imagen cargado en Colab:
+
+![](images/clipboard-48678221.png)
+
+Imagen cargada de PC:
+
+![](images/clipboard-419452710.png)
 
 ### Desarrollo de la aplicación interactiva (Gradio)
 
 Aquí se construye una interfaz completa en Gradio diseñada para permitir mediciones reales en fotografías de hojas usando una escala física. La funcionalidad de la aplicación: - Detección automática: se carga una imagen y la app detecta la hoja, la escala y muestra índices y áreas. - Medición manual mediante clics: esto se incluyó para el caso de imágenes nuevas, que tengan una escala diferente a las uasadas en el entrenamiento (Se usó una regla). - Visualización final: Se genera un reporte con todas las medidas calculadas, hoja segmentada y sus límites.
 
 El resultado final es el área en pixleles y cm², largo y ancho en pixeles y cm, perímetro en píxeles y cm, centímetro por píxeles calculados, información del objeto de referencia (escala detectada).
+
+![](images/clipboard-4104446463.png)
 
 # Anexos
 
