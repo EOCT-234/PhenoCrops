@@ -28,7 +28,7 @@ library(tidyr)
 library(googlesheets4)
 ```
 
-# Fenotipado en ImageJ.exe
+## Fenotipado en ImageJ.exe
 
 ```{r}
 url <- "https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&gid=0#gid=0"
@@ -42,7 +42,7 @@ ImageJ <- gs %>%
 View(ImageJ)
 ```
 
-#Fenotipado en Ela.exe
+## Fenotipado en Ela.exe
 
 ```{r}
 url <- "https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&gid=0#gid=0"
@@ -51,12 +51,12 @@ gs <- url %>%
   as_sheets_id()
 
 ela <- gs %>%
-  range_read(sheet = "ela")
+  googlesheets4::range_read(sheet = "ela")
 
 View(ela)
 ```
 
-#Comparación de áreas obtenidad en las dos aplicaciones
+### Comparación de áreas obtenidad en las dos aplicaciones
 
 ```{r}
 url <- "https://docs.google.com/spreadsheets/d/1XddbJV_9Ru2_ns5UJX_xJ7c7wQ9g_u5Jge-AJNpdVdQ/edit?pli=1&gid=0#gid=0"
@@ -70,7 +70,7 @@ todo <- gs %>%
 View(todo)
 ```
 
-# Barplot de las área obtenidas.
+### Barplot de las área obtenidas.
 
 ```{r}
 datos <- data.frame(
@@ -104,36 +104,37 @@ ggplot(todo_long, aes(x = Hojas, y = Area, fill = Metodo)) +
 
 # Entrenamineto de IA
 
-El proyecto PhenoCrops comenzó con la recopilación de imágenes de lúcuma y su organización en un conjunto de datos estructurado en carpetas de entrenamiento, validación y prueba. Posteriormente se generaron las anotaciones utilizando labelstudio en su versión de segmentación, lo que permitió obtener máscaras poligonales almacenadas en archivos de texto bajo el formato estándar de YOLO (formato exportado). Con estas anotaciones se configuró un archivo YAML que definió las clases, rutas y estructura del dataset. El entrenamiento del modelo se llevó a cabo en la terminal de Windows (CMD), utilizando como base el modelo YOLOv8n-seg por su balance entre velocidad y eficiencia. Tras varias épocas de entrenamiento se obtuvo el modelo final best.pt, el cual se usó para generar predicciones y obtener nuevas máscaras segmentadas, que luego fueron descargadas al equipo local.
+##Desarrolloo del proceso Las imágenes fueron exportadas de labelstudio, de la práctica anterior. ###Preparación de datos Primero se cargaron las imágenes y archivos de anotación generados en formato YOLO. Luego, el scrip los clasificó en "data/images" y "data/labels".
 
-![](images/clipboard-2758917329.jpeg){width="682"}
+###Aumentación masiva del dataset (20x) Esto se hizo para mejorar el rendimiento del modelo, se generó 20 nuevas versionas por cada imagen original. Dichas transformaciones incluyen rotación aleatoria hasta 40°, ajuste del brillo y contraste, escalado proporcional. Y los resultados los almacena en "argumented/images" y "argumented/labels".
 
-![](images/clipboard-3833046870.jpeg)
+###Conversión de anotaciones YOLO a COCO Como para el entrenamiento se empleó Mask R-CNN, la mejor opción fue hacer con Detectron2 y para ello se requierían los archivos en formato COCO Instance Segmentation. El scrip procesó cada archivo YOLO aumentado y al final se almacenó en "dataset_coco.json", que contiene las entregas generadas para el entrenamiento y además es compatible con Detectron2.
 
-# Resultado de entrenamiento
+###Correción de rutas y etiquetas Como Detectron2 necesita de rutas específicas, se extrajo el nombre original del archivo y se reemplazó cualquier ruta por "data/images/"nombre".jpg", y esto reeescribe toda la sección de imágenes en el JSON.
 
-C:\Users\ASUS\Documents\PROGRAMACION\PAD\_U3_G5\PhenoCrops\Entrenamineto de IA\dataset\runs\segment\train
+###Entrenamiento del modelo Se usó Mask R-CNN con backbone ResNet-50 FPN, un modelo de segmentación robusto y estándar. Aquí se configuró las clases (Hoja y Escala), Iteraciones de entrenamiento (3000), Bath size (2 imágenes por iteración, adaptado para GPU de Colab), Learning rat (0.00025), Checkpoints (cada 500 iteraciones), Dataset ("leaf_train"). Al final dió un archivo llamado "model_final.pth" que se usó para la interencia y la aplicaicón iinteractiva.
 
-![](images/clipboard-3283872325.jpeg)
+###Inferencia sobre imágenes nuevas Se carga el modelo entrenado "model_final.pth", se selecciona una imagen nueva, Detectron2 realzia la segmentación de la hoja, segmentación del objeto de referencia ("Escala") y genera un dibujo visual de máscaras.
 
-C:\Users\ASUS\Documents\PROGRAMACION\PAD\_U3_G5\PhenoCrops\images
+###Desarrollo de la aplicación interactiva (Gradio) Aquí se construye una interfaz completa en Gradio diseñada para permitir mediciones reales en fotografías de hojas usando una escala física. La funcionalidad de la aplicación: - Detección automática: se carga una imagen y la app detecta la hoja, la escala y muestra índices y áreas. - Medición manual mediante clics: esto se incluyó para el caso de imágenes nuevas, que tengan una escala diferente a las uasadas en el entrenamiento (Se usó una regla). - Visualización final: Se genera un reporte con todas las medidas calculadas, hoja segmentada y sus límites.
 
-![](images/clipboard-2758917329.jpeg)![](images/clipboard-3833046870.jpeg)
-
-![](images/clipboard-1690166848.png)
-
-![](images/clipboard-2256107356.jpeg){width="262"}
-
-Clase reconocida "peciolo", pero lo ha reconocido en la región equivocada, lo ha hecho en la región que es de la clase "Hoja".
-
-Este error se le atribuye a que no se usó la suficiente cantidad de imágenes o también de que al descargar el formato los archivos se hubieran dañado.
-
-## Predicciones obtenidas del entrenamiento
-
-![](images/clipboard-2424459219.png)
+El resultado final es el área en pixleles y cm², largo y ancho en pixeles y cm, perímetro en píxeles y cm, centímetro por píxeles calculados, información del objeto de referencia (escala detectada).
 
 # Anexos
 
 -   Imágenes usadas: https://drive.google.com/drive/folders/1pv3_1awIPfNOG9ZR2jCWH8xkxYaGVREK
 
--   Imágenes de ela.exe https://drive.google.com/drive/folders/1SRlYCb1ZVEdITpXi_CzIaZVbdB3QEvHP?usp=sharing
+-   Imágenes de ela.exe: https://drive.google.com/drive/folders/1SRlYCb1ZVEdITpXi_CzIaZVbdB3QEvHP?usp=sharing
+
+-   Enlace de Colab con el código: https://colab.research.google.com/drive/15mq6eNmU5vNbp9s4cm0jY-aoPjVtxKOf?usp=sharing
+
+-   Se adjunta el la carpeta comprimida de la interfaz creada.
+
+-   Para que la interfaz tenga exito es necesario ejecutar desde Windows PowerShell como administrador el siguiente código:\
+    cd C:\EOCT\_Analyzer
+
+    venv\Scripts\activate
+
+    python app.py
+
+-   Enlace de la interfaz: <http://localhost:7860/>
